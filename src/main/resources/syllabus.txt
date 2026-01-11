@@ -1,0 +1,66 @@
+COURSE OVERVIEW
+Course Name: Cloud Computing Architecture
+Course ID: 10353
+Program: Software Engineering
+Academic Year: 2026
+Academic Credits: 3.00
+Course Hours: 4.00 total (2.00 Lecture + 2.00 Tutorial)
+Course Coordinator: Mr. Eisenstein Eyal
+Language of Instruction: Hebrew
+
+PREREQUISITES
+Mandatory Prerequisites:
+- 10143 Integrative Software Engineering OR
+- 10141 Integrative Software Engineering
+Note: Students must ensure these match their specific personal program requirements.
+
+ATTENDANCE POLICY
+Class Attendance: Mandatory
+
+COURSE OBJECTIVES AND ABSTRACT
+Objectives: Students learn distributed development methodologies over cloud architecture, cloud technology, and distributed development.
+Abstract: Focuses on scalability, modular distribution, and cloud architecture dynamics. Topics include cloud design patterns, distributed data/process development, monitoring, and Agile cloud development.
+
+LEARNING OUTCOMES
+- Content: Understanding distributed software development, code management, and multi-platform infrastructures.
+- Skills: Writing high-quality programs, teamwork (contributing to staff meetings/synthesis of ideas), and self-learning of cutting-edge technologies.
+
+WEEKLY LECTURE TOPICS
+Week 1: Introduction to Distributed Cloud Systems architectures (Overview & Infrastructures)
+Week 2: Micro-Service based modular development & Layered architecture
+Week 3: Automation using Agile methodologies (Build tools, CI, revision control)
+Week 4: Backend API, Integration tier, and Resource management using cloud platforms
+Week 5: Data Layer Development (Structured and unstructured repositories)
+Week 6: Data Layer Development (Continued)
+Week 7: Service Layer: Business Logic oriented design patterns
+Week 8: Micro Service API: Developing RESTful Microservices
+Week 9: Integration Layer: A-Synchronous components & reactive programming
+Week 10: Integration Layer: Distributed messaging development
+Week 11: Cloud Infrastructures: Management, configuration, and high availability
+Week 12: Cloud Infrastructures: Discovery, recovery, and validation
+Week 13: Teams Project Presentations
+
+GRADING AND REQUIREMENTS
+Final Grade Calculation:
+- Final Exam: 60%
+- Course Project (with final exam): 30%
+- Homework Assignments: 10%
+- Midterm Exam: 0%
+
+Passing Criteria:
+1. Minimum final grade of 60.
+2. Compliance with mandatory attendance requirements.
+
+EXAM DETAILS
+Final Exam Duration: 120 minutes
+Final Exam Location: Regular class (No computers permitted)
+Permitted Materials: Any written or printed material.
+Formula Sheets: Up to 10 single-sided self-written sheets allowed.
+
+RECOMMENDED BIBLIOGRAPHY
+* Magnus Larsson, Microservices with Spring Boot 3 and Spring Cloud, 3rd Ed., Packt, 2023 (ISBN-13: 978-1805128694)
+* Thomas Vitale, Cloud Native Spring in Action, Manning, 2023 (ISBN-13: 978-1617298424)
+* Sean P. Kane, Karl Matthias, Docker: Up & Running, 3rd Ed., O'Reilly, 2023 (ISBN-13: 978-1098131821)
+* Marten Deinum, Spring Boot 3 Recipes, Apress, 2024 (ISBN-13: 979-8868801136)
+* Subash Natarajan, Jeveen Jacob, Multi-Cloud Handbook for Developers, Packt, 2024 (ISBN-13: 978-1804618707)
+* Peter Späth, Iuliana Cosmina, Rob Harrop, Chris Schaefer, Pro Spring 6 with Kotlin, Apress, 2023 (ISBN-13: 978-1484295564)
