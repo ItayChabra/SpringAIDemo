@@ -2,12 +2,16 @@ package il.ac.afeka.cloud.springaidemo;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.document.Document;
+import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import reactor.core.publisher.Flux;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,12 +20,15 @@ public class ChatController {
 
     private final ChatClient chatClient;
     private final VectorStore vectorStore;
+    @Value("classpath:prompts/course-assistant.st")
+    private Resource promptTemplate;
 
     public ChatController(ChatClient.Builder chatClientBuilder, VectorStore vectorStore, CourseTools courseTools) {
+        this.vectorStore = vectorStore;
+
         this.chatClient = chatClientBuilder
                 .defaultTools(courseTools) // This registers all @Tool methods in the class
                 .build();
-        this.vectorStore = vectorStore;
     }
 
     private String getContext(String query) {
@@ -95,4 +102,34 @@ public class ChatController {
                 .call()
                 .content();
     }
+
+    @GetMapping(value = "/ask-stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<String> askStream(@RequestParam String query) {
+        String context = getContext(query);
+
+        return chatClient.prompt()
+                .user(u -> u.text("""
+                        Context: {context}
+                        Question: {query}
+                        """)
+                        .param("context", context)
+                        .param("query", query))
+                .stream()
+                .content();
+    }
+
+    @GetMapping("/ask-with-template")
+    public String askWithTemplate(@RequestParam String query) {
+        String context = getContext(query);
+
+        return chatClient.prompt()
+                .user(u -> u.text(promptTemplate)
+                        .param("courseName", "Cloud Computing")
+                        .param("context", context)
+                        .param("question", query))
+                .call()
+                .content();
+    }
+
+
 }
