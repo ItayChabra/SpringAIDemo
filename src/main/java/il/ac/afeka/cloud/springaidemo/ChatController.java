@@ -17,8 +17,10 @@ public class ChatController {
     private final ChatClient chatClient;
     private final VectorStore vectorStore;
 
-    public ChatController(ChatClient.Builder chatClientBuilder, VectorStore vectorStore) {
-        this.chatClient = chatClientBuilder.build();
+    public ChatController(ChatClient.Builder chatClientBuilder, VectorStore vectorStore, CourseTools courseTools) {
+        this.chatClient = chatClientBuilder
+                .defaultTools(courseTools) // This registers all @Tool methods in the class
+                .build();
         this.vectorStore = vectorStore;
     }
 
@@ -77,12 +79,20 @@ public class ChatController {
 
         return String.format(
                 "The course '%s' (ID: %s) is led by %s. " +
-                        "To pass, you need a minimum of 60. The breakdown is: Final %d%%, Project %d%%.",
+                        "To pass, you need a minimum of 60. The breakdown is: Final %d%%, Project %d%%, Homework %d%%.",
                 info.getCourseName(),
                 info.getCourseId(),
                 info.getCoordinator(),
                 info.getGrading().getFinalExam(),
-                info.getGrading().getProject()
+                info.getGrading().getProject(),
+                info.getGrading().getHomework()
         );
+    }
+
+    @GetMapping("/calculate")
+    public String calculate(@RequestParam String query) {
+        return chatClient.prompt(query)
+                .call()
+                .content();
     }
 }
