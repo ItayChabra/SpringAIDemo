@@ -1,7 +1,9 @@
 package il.ac.afeka.cloud.springaidemo;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.document.Document;
+import org.springframework.ai.support.ToolCallbacks;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
@@ -20,12 +22,16 @@ public class ChatController {
 
     private final ChatClient chatClient;
     private final VectorStore vectorStore;
+    private final CourseTools courseTools;
+    private final ChatModel chatModel;
     @Value("classpath:prompts/course-assistant.st")
     private Resource promptTemplate;
 
-    public ChatController(ChatClient.Builder chatClientBuilder, VectorStore vectorStore, CourseTools courseTools) {
+    public ChatController(ChatClient.Builder chatClientBuilder, VectorStore vectorStore, CourseTools courseTools
+    , ChatModel chatModel) {
         this.vectorStore = vectorStore;
-
+        this.courseTools = courseTools;
+        this.chatModel = chatModel;
         this.chatClient = chatClientBuilder
                 .defaultTools(courseTools) // This registers all @Tool methods in the class
                 .build();
@@ -131,5 +137,20 @@ public class ChatController {
                 .content();
     }
 
+    @GetMapping("/calculate-optimized")
+    public String calculateOptimized(@RequestParam String query) {
+        var csvToolProvider = new DelegatorToolCallbackProvider(
+                () -> ToolCallbacks.from(courseTools),
+                ResponseConverter.Format.CSV
+        );
 
+        ChatClient optimizedClient = ChatClient.builder(this.chatModel)
+                .defaultToolCallbacks(csvToolProvider.getToolCallbacks())
+                .build();
+
+        return optimizedClient.prompt()
+                .user(query + "\n\nIMPORTANT: Use the tool to calculate the grade, then explicitly write the result to the user.")
+                .call()
+                .content();
+    }
 }
