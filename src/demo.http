@@ -1,0 +1,3 @@
+### Test Streaming (Click the Green Arrow)
+GET http://localhost:8080/ask-stream?query=Explain+the+rules+of+Quidditch+in+extreme+detail,+describing+every+ball+(Quaffle,+Bludger,+Snitch),+the+positions+of+the+players,+how+points+are+scored,+and+what+happens+during+Harry's+first+match.
+Accept: text/event-stream
