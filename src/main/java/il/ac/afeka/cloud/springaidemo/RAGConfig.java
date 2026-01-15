@@ -21,11 +21,11 @@ public class RAGConfig {
 
     private static final Logger logger = Logger.getLogger(RAGConfig.class.getName());
 
-    // 1. Inject Syllabus
+    // Inject Syllabus
     @Value("classpath:syllabus.txt")
     private Resource syllabusResource;
 
-    // 2. Inject Harry Potter
+    // Inject Harry Potter
     @Value("classpath:harry_potter.txt")
     private Resource harryPotterResource;
 
@@ -91,7 +91,7 @@ public class RAGConfig {
                 // --- SAVE ---
                 if (vectorStore instanceof SimpleVectorStore) {
                     ((SimpleVectorStore) vectorStore).save(storeFile);
-                    logger.info("Vector store persisted to: " + storeFile.getAbsolutePath());
+                    logger.info("Vector store saved to: " + storeFile.getAbsolutePath());
                 }
 
             } catch (Exception e) {

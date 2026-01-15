@@ -20,10 +20,10 @@ public class ResponseConverter {
 
     public static String convert(String jsonResponse, Format format) {
         try {
-            // 1. Parse the input JSON String into a Tree Node
+            // Parse the input JSON String into a Tree Node
             JsonNode jsonNode = jsonMapper.readTree(jsonResponse);
 
-            // 2. Switch based on the requested format
+            // Switch based on the requested format
             switch (format) {
                 case CSV:
                     return jsonToCsv(jsonNode);

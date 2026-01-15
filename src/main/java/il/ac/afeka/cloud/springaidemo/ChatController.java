@@ -32,7 +32,7 @@ public class ChatController {
         this.courseTools = courseTools;
         this.chatModel = chatModel;
         this.chatClient = chatClientBuilder
-                .defaultTools(courseTools) // This registers all @Tool methods in the class
+                .defaultTools(courseTools)
                 .build();
     }
 
@@ -51,7 +51,7 @@ public class ChatController {
 
     @GetMapping("/ask")
     public String ask(@RequestParam String query) {
-        String context = getContext(query); // Using the helper [cite: 66]
+        String context = getContext(query);
 
         return chatClient.prompt()
                 .user(u -> u.text("""
@@ -81,7 +81,7 @@ public class ChatController {
                         """)
                         .param("context", context))
                 .call()
-                .entity(CourseInfo.class); // Spring AI Structured Output [cite: 31]
+                .entity(CourseInfo.class);
     }
 
     @GetMapping("/course-summary")

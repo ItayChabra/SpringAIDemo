@@ -25,12 +25,10 @@ public class DelegatorToolCallbackProvider implements ToolCallbackProvider {
                 .toArray(ToolCallback[]::new);
     }
 
-    // Inner Class: The actual interceptor
     public static class DelegatorToolCallback implements ToolCallback {
         private final ToolCallback original;
         private final ResponseConverter.Format format;
 
-        // Define the mapper here so we can use it
         private final ObjectMapper jsonMapper = new ObjectMapper();
 
         public DelegatorToolCallback(ToolCallback original, ResponseConverter.Format format) {
@@ -45,13 +43,13 @@ public class DelegatorToolCallbackProvider implements ToolCallbackProvider {
 
         @Override
         public String call(String toolInput) {
-            // 1. Run the original tool
+            // Run the original tool
             String jsonResult = original.call(toolInput);
 
-            // 2. Convert to target format (Raw CSV)
+            // Convert to target format (Raw CSV)
             String rawCsv = ResponseConverter.convert(jsonResult, this.format);
 
-            // 3. LOGGING (Show the Raw CSV for the Demo)
+            // LOGGING (Show the Raw CSV for the Demo)
             System.out.println("\n=================================================");
             System.out.println("OPTIMIZATION DEMO: Flexible Data Formats");
             System.out.println("=================================================");
@@ -60,7 +58,6 @@ public class DelegatorToolCallbackProvider implements ToolCallbackProvider {
             System.out.println("Size Reduction: " + jsonResult.length() + " chars -> " + rawCsv.length() + " chars");
             System.out.println("=================================================\n");
 
-            // 4. SAFE WRAP (The Fix!)
             // We wrap the CSV string in JSON quotes so the framework doesn't crash.
             try {
                 return jsonMapper.writeValueAsString(rawCsv);
